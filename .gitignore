@@ -1,0 +1,5 @@
+# Persoonsgegevens van leads — nooit naar GitHub pushen
+leads.csv
+
+.DS_Store
+node_modules/
