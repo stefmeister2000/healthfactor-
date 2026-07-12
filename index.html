@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Healthfactor Gym Aalst — Start voor €34,99 met het volledige starterspakket</title>
-<meta name="description" content="Word deze maand lid van Healthfactor Aalst: onbeperkt fitness voor €34,99/maand + het volledige starterspakket t.w.v. €144,89 inbegrepen. Beperkt aantal plaatsen." />
+<title>Healthfactor Gym Aalst — Start voor €39,90 met het volledige starterspakket</title>
+<meta name="description" content="Word lid van Healthfactor Aalst: onbeperkt fitness voor €39,90/maand + het volledige starterspakket t.w.v. €155 inbegrepen. Beperkt aantal plaatsen per maand." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
@@ -366,6 +366,49 @@
     color: var(--white);
   }
   .ic svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- Testimonial wall (light) ---------- */
+  .wall { columns: 3; column-gap: 16px; }
+  .wall > * { break-inside: avoid; margin-bottom: 16px; }
+  .wimg {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    display: block;
+    border: 1px solid rgba(0,0,0,.06);
+  }
+  .wimg img { width: 100%; display: block; transition: transform .5s ease; }
+  .wimg:hover img { transform: scale(1.03); }
+  .wquote {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: var(--r-lg);
+    padding: 28px 26px;
+    box-shadow: 0 14px 44px rgba(0,0,0,.05);
+  }
+  .wquote .stars { color: var(--black); font-size: 14px; display: block; margin-bottom: 12px; letter-spacing: 2px; }
+  .wquote .kg {
+    display: inline-block;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-weight: 800;
+    font-size: 12.5px;
+    margin-bottom: 14px;
+  }
+  .wquote p.txt { font-size: 15.5px; color: var(--black); margin-bottom: 14px; }
+  .wquote .who { font-size: 13px; font-weight: 700; color: var(--grey-dark); }
+  .wstat {
+    background: var(--black);
+    color: var(--white);
+    border-radius: var(--r-lg);
+    padding: 34px 26px;
+    text-align: center;
+  }
+  .wstat .big { font-size: 42px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+  .wstat .stars { display: block; margin: 10px 0 6px; letter-spacing: 3px; }
+  .wstat .lbl { font-size: 13px; color: var(--grey); }
+  .wall-cta { text-align: center; margin: 40px 0 56px; }
 
   /* ---------- Features (light) ---------- */
   .feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -849,6 +892,7 @@
 
   /* ---------- Responsive ---------- */
   @media (max-width: 1020px) {
+    .wall { columns: 2; }
     .hero-grid, .final-grid, .stories-grid, .mentor-grid { grid-template-columns: 1fr; }
     .feats { grid-template-columns: 1fr; max-width: 540px; margin-inline: auto; }
     .cs-grid { grid-template-columns: 1fr; }
@@ -861,6 +905,7 @@
     .jstep:nth-child(even) .jimg { order: 0; }
   }
   @media (max-width: 760px) {
+    .wall { columns: 1; }
     .nav .btn { display: none; }
     .offer-bar { font-size: 11px; }
     .guarantee { flex-direction: column; text-align: center; }
@@ -876,7 +921,7 @@
 <!-- ================= FIXED TOP: OFFER BAR + NAV ================= -->
 <div class="top-fixed" id="topFixed">
 <div class="offer-bar">
-  <b>Actie:</b> start voor €34,99 met het volledige starterspakket t.w.v. €144,89 — nog <span class="cd" id="cdBar">--d --u --m</span>
+  <b>Actie:</b> start voor €39,90 en krijg het volledige starterspakket t.w.v. €155 erbij
 </div>
 
 <header id="header">
@@ -885,7 +930,7 @@
       <span class="hf-mark">Health<br>Factor.</span>
       Healthfactor
     </a>
-    <a class="btn btn-white" href="#claim">Start voor €34,99</a>
+    <a class="btn btn-white" href="#claim">Start voor €39,90</a>
   </nav>
 </header>
 </div>
@@ -895,20 +940,20 @@
   <div class="wrap hero-inner">
     <div class="hero-grid">
       <div>
-        <span class="bonus-chip"><span class="dot"></span> Beperkt aanbod — enkel deze maand</span>
-        <h1>Alles erin.<br /><span class="strike">€144,89</span> €34,99.</h1>
+        <span class="bonus-chip"><span class="dot"></span> Beperkt aantal starterspakketten per maand</span>
+        <h1>Alles erin.<br /><span class="strike">€155</span> €39,90.</h1>
         <p class="lede">
           Onbeperkt fitness bij Healthfactor in Aalst, mét het volledige starterspakket:
           sporttas, opstartsessie met Steve en lichaamsmeting. <b>Eén prijs voor je hele
-          eerste maand</b> — daarna maandelijks opzegbaar. <b>No excuse. I workout.</b>
+          eerste maand</b> — geen jaarcontract. <b>No excuse. I workout.</b>
         </p>
         <div class="price-line">
-          <span class="amount">€34,99<small> /maand</small></span>
+          <span class="amount">€39,90<small> /maand</small></span>
           <span class="note">Alles inbegrepen · geen inschrijvingskosten</span>
         </div>
         <a class="btn btn-white btn-stack" href="#claim">
-          <span>Ja, ik start voor €34,99 <span class="arrow">→</span></span>
-          <span class="btn-sub">Maandelijks opzegbaar — zonder betaalgegevens</span>
+          <span>Ja, ik start voor €39,90 <span class="arrow">→</span></span>
+          <span class="btn-sub">Geen jaarcontract — zonder betaalgegevens</span>
         </a>
         <div class="hero-proof">
           <div class="avatars">
@@ -927,15 +972,15 @@
         <ul class="stack">
           <li>
             <span class="what">1 maand onbeperkt fitness<small>Train wanneer je wil, 7/7</small></span>
-            <span class="val keep">€34,99</span>
+            <span class="val keep">€39,90</span>
           </li>
           <li>
             <span class="what">Sporttas + accessoires<small>Healthfactor gear voor elke nieuwe lid</small></span>
-            <span class="val">€39,90</span>
+            <span class="val">€40</span>
           </li>
           <li>
             <span class="what">Opstartsessie met Steve<small>Persoonlijk schema op jouw niveau</small></span>
-            <span class="val">€45</span>
+            <span class="val">€50</span>
           </li>
           <li>
             <span class="what">Lichaamsmeting &amp; doelbepaling<small>Meten is weten</small></span>
@@ -943,10 +988,10 @@
           </li>
           <li class="total">
             <span class="what">Totale waarde</span>
-            <span class="val">€144,89</span>
+            <span class="val">€155</span>
           </li>
         </ul>
-        <p class="today">Jij betaalt: <b>€34,99 voor je hele eerste maand</b> — daarna €34,99/maand</p>
+        <p class="today">Jij betaalt: <b>€39,90 voor je hele eerste maand</b> — daarna €39,90/maand</p>
         <a class="btn btn-black" href="#claim">Claim het starterspakket <span class="arrow">→</span></a>
         <div class="spots">
           <span>Nog <b>13 van de 50</b> starterspakketten deze maand</span>
@@ -957,12 +1002,40 @@
   </div>
 </section>
 
-<!-- ================= WHY (light) ================= -->
+<!-- ================= LEDEN & VERHALEN (light) ================= -->
 <section class="light" id="waarom">
   <div class="wrap">
     <div class="sec-head center reveal">
+      <span class="kicker">Echte leden, echte verhalen</span>
+      <h2>Zij trainen hier al.</h2>
+      <p>Geen modellen, geen stockfoto's — dit zijn onze leden, in onze gym in Aalst.</p>
+    </div>
+    <div class="wall">
+      <div class="wimg reveal"><img src="images/leden-1.jpg" alt="Lid traint met dumbbells bij Healthfactor" loading="lazy" /></div>
+      <div class="wquote reveal">
+        <span class="kg">−22 kg</span>
+        <p class="txt">"Er bestaan veel fitnessclubs, maar bij deze club kom ik graag iedere dag binnen. Een foto zegt meer dan woorden: 22 kg later."</p>
+        <div class="who">Nico — lid bij Healthfactor</div>
+      </div>
+      <div class="wimg reveal"><img src="images/leden-2.jpg" alt="Lid traint bij Healthfactor" loading="lazy" /></div>
+      <div class="wstat reveal">
+        <div class="big">500+</div>
+        <span class="stars">★★★★★</span>
+        <div class="lbl">leden gingen je voor in Aalst</div>
+      </div>
+      <div class="wimg reveal"><img src="images/leden-3.jpg" alt="Lid bij Healthfactor" loading="lazy" /></div>
+      <div class="wquote reveal">
+        <span class="stars">★★★★★</span>
+        <p class="txt">"Na 2 zwangerschappen voelde ik me niet goed meer in mijn vel. Dankzij Healthfactor herkende ik mezelf terug in de spiegel."</p>
+        <div class="who">Lore — lid bij Healthfactor</div>
+      </div>
+    </div>
+    <div class="wall-cta reveal">
+      <a class="btn btn-black" href="#claim">Ik wil ook resultaat <span class="arrow">→</span></a>
+    </div>
+    <div class="sec-head center reveal" style="margin-bottom:40px">
       <span class="kicker">Waarom Healthfactor</span>
-      <h2>Eén prijs. Alles erin. €34,99.</h2>
+      <h2>Eén prijs. Alles erin. €39,90.</h2>
       <p>Geen instapkosten, geen verplichte extra's, geen jaarcontract. Gewoon onbeperkt trainen in een gym waar je graag binnenkomt.</p>
     </div>
     <div class="feats">
@@ -977,8 +1050,8 @@
         <div class="ic">
           <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 7.5-1.9"/></svg>
         </div>
-        <h3>Maandelijks opzegbaar</h3>
-        <p>€34,99 per maand, stoppen wanneer je wil. Geen opzegkosten, geen kleine lettertjes, geen jaarcontract.</p>
+        <h3>Geen jaarcontract</h3>
+        <p>€39,90 per maand, opzeggen kan altijd met één maand opzegtermijn. Geen opzegkosten, geen kleine lettertjes.</p>
       </div>
       <div class="feat reveal" style="transition-delay:.16s">
         <div class="ic">
@@ -1006,7 +1079,7 @@
           <p>Persoonlijke opstartsessie met Steve: lichaamsmeting, doelbepaling en een schema op jouw niveau. Sporttas ligt klaar aan de balie.</p>
         </div>
         <span class="jdot"></span>
-        <div class="jimg"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=900&auto=format&fit=crop" alt="Opstartsessie met coach" loading="lazy" /></div>
+        <div class="jimg"><img src="images/leden-4.jpg" alt="Persoonlijke opstartsessie bij Healthfactor" loading="lazy" style="object-position: center 32%" /></div>
       </div>
       <div class="jstep reveal">
         <div class="jcard">
@@ -1015,7 +1088,7 @@
           <p>Je traint volgens jouw schema en leert de toestellen kennen. Vragen? Er loopt altijd iemand rond die je verder helpt.</p>
         </div>
         <span class="jdot"></span>
-        <div class="jimg"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=900&auto=format&fit=crop" alt="Trainen in de gym" loading="lazy" /></div>
+        <div class="jimg"><img src="images/leden-5.jpg" alt="Trainen op de toestellen bij Healthfactor" loading="lazy" style="object-position: center 28%" /></div>
       </div>
       <div class="jstep reveal">
         <div class="jcard">
@@ -1030,10 +1103,19 @@
         <div class="jcard">
           <span class="wk">Week 4</span>
           <h3>Jij beslist</h3>
-          <p>Tevreden? Dan train je gewoon door aan €34,99/maand, maandelijks opzegbaar. Niet overtuigd? Dan stop je — zonder kosten.</p>
+          <p>Tevreden? Dan train je gewoon door aan €39,90/maand. Niet overtuigd? Opzeggen kan altijd — met één maand opzegtermijn, zonder extra kosten.</p>
         </div>
         <span class="jdot"></span>
         <div class="jimg"><img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=900&auto=format&fit=crop" alt="Doorzetten en beslissen" loading="lazy" /></div>
+      </div>
+    </div>
+    <div class="guarantee reveal">
+      <div class="shield">
+        <svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.2 7 10 4-1.8 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4.5"/></svg>
+      </div>
+      <div>
+        <h3>Onze no-excuse garantie</h3>
+        <p>Niet 100% overtuigd? Opzeggen kan altijd met één maand opzegtermijn — geen opzegkosten, geen kleine lettertjes, geen vragen. Het enige risico is dat je fitter wordt.</p>
       </div>
     </div>
   </div>
@@ -1070,56 +1152,14 @@
         <ul class="mentor-points reveal">
           <li>
             <span class="pic"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4a3 3 0 0 0 3 5M17 6h3a3 3 0 0 1-3 5"/></svg></span>
-            10+ jaar ervaring in fitness &amp; coaching
+            25 jaar ervaring in de fitnesswereld
           </li>
           <li>
             <span class="pic"><svg viewBox="0 0 24 24"><path d="M8 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM2.5 20a5.5 5.5 0 0 1 11 0M16 11.5a3 3 0 1 0-2-5.5M15.5 15.5a5 5 0 0 1 6 4.5"/></svg></span>
             Persoonlijke opvolging voor elk lid
           </li>
-          <li>
-            <span class="pic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-            Geboren en getogen in Aalst
-          </li>
         </ul>
-        <a class="btn btn-black reveal" href="#claim">Start bij Steve voor €34,99 <span class="arrow">→</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PROOF (dark) ================= -->
-<section id="resultaten">
-  <div class="wrap">
-    <div class="stories-grid">
-      <div class="stories-visual reveal">
-        <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=1200&auto=format&fit=crop" alt="Lid traint bij Healthfactor" loading="lazy" />
-        <div class="badge">−22 kg</div>
-      </div>
-      <div>
-        <div class="sec-head reveal">
-          <span class="kicker">Echte leden, echte resultaten</span>
-          <h2>Zij deden het al.</h2>
-        </div>
-        <div class="quote reveal">
-          <span class="stars">★★★★★</span>
-          <p class="txt">"Er bestaan veel fitnessclubs, maar bij deze club kom ik graag iedere dag binnen. Een foto zegt meer dan woorden: 22 kg later."</p>
-          <div class="who"><b>Nico</b> — lid bij Healthfactor</div>
-        </div>
-        <div class="quote reveal">
-          <span class="stars">★★★★★</span>
-          <p class="txt">"Na 2 zwangerschappen voelde ik me niet goed meer in mijn vel. Dankzij Healthfactor herkende ik mezelf terug in de spiegel."</p>
-          <div class="who"><b>Lore</b> — lid bij Healthfactor</div>
-        </div>
-        <a class="btn btn-white reveal" href="#claim">Ik wil ook resultaat <span class="arrow">→</span></a>
-      </div>
-    </div>
-    <div class="guarantee reveal">
-      <div class="shield">
-        <svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.5 3 8.2 7 10 4-1.8 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4.5"/></svg>
-      </div>
-      <div>
-        <h3>Onze no-excuse garantie</h3>
-        <p>Niet 100% overtuigd na je eerste maand? Dan stop je gewoon. Geen opzegkosten, geen kleine lettertjes, geen vragen. Het enige risico is dat je fitter wordt.</p>
+        <a class="btn btn-black reveal" href="#claim">Start bij Steve voor €39,90 <span class="arrow">→</span></a>
       </div>
     </div>
   </div>
@@ -1134,20 +1174,20 @@
     </div>
     <div class="faq reveal">
       <details>
-        <summary>Wat krijg ik precies voor €34,99?</summary>
-        <div class="a">Je hele eerste maand: onbeperkt fitness, 7 dagen per week, plus het volledige starterspakket — sporttas met accessoires (t.w.v. €39,90), een persoonlijke opstartsessie met Steve (t.w.v. €45) en een lichaamsmeting met doelbepaling (t.w.v. €25). Samen €144,89 aan waarde, jij betaalt €34,99.</div>
+        <summary>Wat krijg ik precies voor €39,90?</summary>
+        <div class="a">Je hele eerste maand: onbeperkt fitness, 7 dagen per week, plus het volledige starterspakket — sporttas met accessoires (t.w.v. €40), een persoonlijke opstartsessie met Steve (t.w.v. €50) en een lichaamsmeting met doelbepaling (t.w.v. €25). Samen €155 aan waarde, jij betaalt €39,90.</div>
       </details>
       <details>
         <summary>Wat kost het na de eerste maand?</summary>
-        <div class="a">Gewoon hetzelfde: €34,99 per maand, alles inbegrepen — onbeperkt fitness, 7 dagen per week. Geen inschrijvingskosten, geen verplichte extra's, geen jaarcontract.</div>
+        <div class="a">Gewoon hetzelfde: €39,90 per maand, alles inbegrepen — onbeperkt fitness, 7 dagen per week. Geen inschrijvingskosten, geen verplichte extra's, geen jaarcontract.</div>
       </details>
       <details>
         <summary>Ik heb nog nooit gefitnesst. Is dit iets voor mij?</summary>
         <div class="a">Zeker. Healthfactor is letterlijk "de gym voor iedereen". Je start met een persoonlijke opstartsessie waarin Steve of zijn team een schema op jouw niveau maakt. Je staat er nooit alleen voor.</div>
       </details>
       <details>
-        <summary>Zit ik ergens aan vast na de actie?</summary>
-        <div class="a">Nee. Je lidmaatschap loopt gewoon verder aan €34,99/maand en is maandelijks opzegbaar. Wil je stoppen na je eerste maand, dan stop je zonder kosten.</div>
+        <summary>Zit ik ergens aan vast?</summary>
+        <div class="a">Nee, er is geen jaarcontract. Je lidmaatschap loopt gewoon verder aan €39,90/maand en opzeggen kan op elk moment — er geldt enkel een opzegtermijn van één maand, zonder opzegkosten.</div>
       </details>
       <details>
         <summary>Wanneer kan ik trainen?</summary>
@@ -1169,22 +1209,16 @@
         <h2 class="reveal">Jouw starterspakket wacht.</h2>
         <p class="sub reveal">Over een maand ben je ofwel gestart, ofwel heb je weer een excuus gevonden. Kies vandaag.</p>
         <ul class="checklist reveal">
-          <li>1 maand onbeperkt fitness — €34,99</li>
-          <li>Starterspakket t.w.v. €144,89 inbegrepen</li>
-          <li>Sporttas + accessoires t.w.v. €39,90</li>
+          <li>1 maand onbeperkt fitness — €39,90</li>
+          <li>Starterspakket t.w.v. €155 inbegrepen</li>
+          <li>Sporttas + accessoires t.w.v. €40</li>
           <li>Opstartsessie &amp; lichaamsmeting met Steve</li>
         </ul>
-        <div class="cd-big reveal" id="cdBig">
-          <div class="unit"><div class="n" id="cdD">--</div><div class="l">dagen</div></div>
-          <div class="unit"><div class="n" id="cdH">--</div><div class="l">uren</div></div>
-          <div class="unit"><div class="n" id="cdM">--</div><div class="l">minuten</div></div>
-          <div class="unit"><div class="n" id="cdS">--</div><div class="l">seconden</div></div>
-        </div>
-        <p class="cd-cap reveal">De actie loopt af op de laatste dag van deze maand.</p>
+        <p class="cd-cap reveal">Vandaag ingeschreven, deze week nog trainen. We nemen binnen 24 uur contact op.</p>
       </div>
       <div class="form-card reveal">
         <div class="form-head">
-          <span class="chip">Pakketwaarde: €144,89 — jij betaalt €34,99</span>
+          <span class="chip">Pakketwaarde: €155 — jij betaalt €39,90</span>
           <h3>Claim je starterspakket</h3>
           <p>30 seconden invullen. We bellen je binnen 24 uur — daarna kan je meteen starten.</p>
         </div>
@@ -1218,7 +1252,7 @@
           </div>
           <button class="btn btn-black btn-stack" type="submit" style="width:100%">
             <span>Claim mijn starterspakket <span class="arrow">→</span></span>
-            <span class="btn-sub">Maandelijks opzegbaar &amp; zonder betaalgegevens</span>
+            <span class="btn-sub">Geen jaarcontract &amp; zonder betaalgegevens</span>
           </button>
           <p class="form-fine">Je gegevens worden enkel gebruikt om je inschrijving te regelen.</p>
           <div class="form-ok" id="formOk">✓ Top! Je plek is gereserveerd. We bellen je binnen 24 uur om alles in orde te maken.</div>
@@ -1287,8 +1321,8 @@
 <!-- Sticky mobile CTA -->
 <div class="sticky-cta">
   <a class="btn btn-white btn-stack" href="#claim">
-    <span>Start voor €34,99 →</span>
-    <span class="btn-sub" id="cdSticky">Actie eindigt over --d --u</span>
+    <span>Start voor €39,90 →</span>
+    <span class="btn-sub">Volledig starterspakket t.w.v. €155 inbegrepen</span>
   </a>
 </div>
 
@@ -1311,29 +1345,6 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-  // Countdown to the last moment of the current month
-  const pad = n => String(n).padStart(2, '0');
-  function endOfMonth() {
-    const now = new Date();
-    return new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
-  }
-  const deadline = endOfMonth();
-  function tickCountdown() {
-    let ms = Math.max(0, deadline - new Date());
-    const d = Math.floor(ms / 864e5); ms -= d * 864e5;
-    const h = Math.floor(ms / 36e5);  ms -= h * 36e5;
-    const m = Math.floor(ms / 6e4);   ms -= m * 6e4;
-    const s = Math.floor(ms / 1e3);
-    document.getElementById('cdBar').textContent = d + 'd ' + pad(h) + 'u ' + pad(m) + 'm';
-    document.getElementById('cdSticky').textContent = 'Actie eindigt over ' + d + 'd ' + pad(h) + 'u';
-    document.getElementById('cdD').textContent = pad(d);
-    document.getElementById('cdH').textContent = pad(h);
-    document.getElementById('cdM').textContent = pad(m);
-    document.getElementById('cdS').textContent = pad(s);
-  }
-  tickCountdown();
-  setInterval(tickCountdown, 1000);
 
   // Leads opslaan via de lokale server (server.js → leads.csv)
   async function saveLead(data) {

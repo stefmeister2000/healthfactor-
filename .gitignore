@@ -3,3 +3,6 @@ leads.csv
 
 .DS_Store
 node_modules/
+
+# Originele foto's (de site gebruikt de geoptimaliseerde leden-*.jpg versies)
+images/*_rw_1920.jpg
