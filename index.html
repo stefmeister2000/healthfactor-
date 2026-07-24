@@ -3,6 +3,23 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '927059093760585');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=927059093760585&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <title>Healthfactor Gym Aalst — Start voor €39,90 met het volledige starterspakket</title>
 <meta name="description" content="Word lid van Healthfactor Aalst: start je eerste maand voor €39,90 met het volledige starterspakket t.w.v. €155 inbegrepen, daarna €69,90/maand. Beperkt aantal plaatsen per maand." />
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -1378,6 +1395,7 @@
         email: document.getElementById('email').value,
         doel: document.getElementById('goal').value,
       });
+      if (window.fbq) fbq('track', 'Lead', { content_name: 'Starterspakket' });
       ok.textContent = '✓ Top! Je plek is gereserveerd. We bellen je binnen 24 uur om alles in orde te maken.';
       ok.style.display = 'block';
       e.target.querySelectorAll('input').forEach(i => i.value = '');
@@ -1439,6 +1457,7 @@
     e.preventDefault();
     try {
       await saveLead({ type: 'nieuwsbrief', email: document.getElementById('popupEmail').value });
+      if (window.fbq) fbq('track', 'Lead', { content_name: 'E-mail popup' });
       popup.classList.add('done');
       localStorage.setItem('hf_popup', '1');
     } catch (err) {
