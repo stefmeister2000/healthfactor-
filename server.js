@@ -11,6 +11,42 @@ const PORT = process.env.PORT || 4174;
 const LEADS_FILE = path.join(ROOT, 'leads.csv');
 const CSV_HEADER = 'datum;type;voornaam;naam;email;telefoon;doel\n';
 
+// .env inladen (geen dependency) — RESEND_API_KEY en RESEND_AUDIENCE_ID
+function loadEnv() {
+  try {
+    for (const line of fs.readFileSync(path.join(ROOT, '.env'), 'utf8').split('\n')) {
+      const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*?)\s*$/);
+      if (m && m[1][0] !== '#' && !process.env[m[1]]) {
+        process.env[m[1]] = m[2].replace(/^["']|["']$/g, '');
+      }
+    }
+  } catch { /* geen .env — dan slaan we Resend gewoon over */ }
+}
+loadEnv();
+
+// Voeg een lead toe als contact aan de Resend audience (indien geconfigureerd)
+async function syncToResend(data) {
+  const key = process.env.RESEND_API_KEY;
+  const audience = process.env.RESEND_AUDIENCE_ID;
+  if (!key || !audience || !data.email) return; // niet geconfigureerd → overslaan
+  try {
+    const r = await fetch(`https://api.resend.com/audiences/${audience}/contacts`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: data.email,
+        first_name: data.voornaam || '',
+        last_name: data.naam || '',
+        unsubscribed: false,
+      }),
+    });
+    if (r.ok) console.log('[resend] contact toegevoegd:', data.email);
+    else console.error('[resend] niet toegevoegd:', r.status, await r.text());
+  } catch (e) {
+    console.error('[resend] fout:', e.message);
+  }
+}
+
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css',
@@ -53,6 +89,7 @@ const server = http.createServer((req, res) => {
         if (!data.email && !data.telefoon) throw new Error('email of telefoon vereist');
         saveLead(data);
         console.log(`[lead] ${data.type}: ${data.voornaam || ''} ${data.naam || ''} <${data.email || data.telefoon}>`);
+        syncToResend(data); // naar Resend audience (fire-and-forget)
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end('{"ok":true}');
       } catch (e) {

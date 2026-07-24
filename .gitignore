@@ -1,3 +1,6 @@
+# Geheime sleutels — nooit naar GitHub pushen
+.env
+
 # Persoonsgegevens van leads — nooit naar GitHub pushen
 leads.csv
 
