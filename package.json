@@ -1,0 +1,12 @@
+{
+  "name": "healthfactor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Healthfactor gym landingspagina met lead capture naar Resend",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

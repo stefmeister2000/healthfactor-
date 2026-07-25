@@ -114,4 +114,4 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => console.log(`Healthfactor draait op http://localhost:${PORT} — leads in ${LEADS_FILE}`));
+server.listen(PORT, '0.0.0.0', () => console.log(`Healthfactor draait op poort ${PORT} — leads in ${LEADS_FILE}`));
