@@ -24,26 +24,47 @@ function loadEnv() {
 }
 loadEnv();
 
-// Voeg een lead toe als contact aan de Resend audience (indien geconfigureerd)
+// Event dat de welkom-automation in Resend triggert
+const RESEND_EVENT_NAME = process.env.RESEND_EVENT_NAME || 'healthfactor.email_signup';
+
+// Voeg een lead toe als contact aan de Resend audience én vuur het signup-event
+// (dat laatste start de welkomflow-automation). Beide alleen als geconfigureerd.
 async function syncToResend(data) {
   const key = process.env.RESEND_API_KEY;
   const audience = process.env.RESEND_AUDIENCE_ID;
-  if (!key || !audience || !data.email) return; // niet geconfigureerd → overslaan
+  if (!key || !data.email) return; // niet geconfigureerd → overslaan
+
+  // 1) Contact toevoegen aan de audience (moet eerst bestaan voor de automation)
+  if (audience) {
+    try {
+      const r = await fetch(`https://api.resend.com/audiences/${audience}/contacts`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: data.email,
+          first_name: data.voornaam || '',
+          last_name: data.naam || '',
+          unsubscribed: false,
+        }),
+      });
+      if (r.ok) console.log('[resend] contact toegevoegd:', data.email);
+      else console.error('[resend] contact niet toegevoegd:', r.status, await r.text());
+    } catch (e) {
+      console.error('[resend] contact fout:', e.message);
+    }
+  }
+
+  // 2) Signup-event vuren → start de welkomflow-automation
   try {
-    const r = await fetch(`https://api.resend.com/audiences/${audience}/contacts`, {
+    const r = await fetch('https://api.resend.com/events/send', {
       method: 'POST',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: data.email,
-        first_name: data.voornaam || '',
-        last_name: data.naam || '',
-        unsubscribed: false,
-      }),
+      body: JSON.stringify({ event: RESEND_EVENT_NAME, email: data.email }),
     });
-    if (r.ok) console.log('[resend] contact toegevoegd:', data.email);
-    else console.error('[resend] niet toegevoegd:', r.status, await r.text());
+    if (r.ok) console.log('[resend] event gevuurd:', RESEND_EVENT_NAME, data.email);
+    else console.error('[resend] event mislukt:', r.status, await r.text());
   } catch (e) {
-    console.error('[resend] fout:', e.message);
+    console.error('[resend] event fout:', e.message);
   }
 }
 
