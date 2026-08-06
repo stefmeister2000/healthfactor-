@@ -45,6 +45,8 @@ async function syncToResend(data) {
           first_name: data.voornaam || '',
           last_name: data.naam || '',
           unsubscribed: false,
+          // Telefoon als custom property bewaren (alleen als aanwezig — popup heeft er geen)
+          ...(data.telefoon ? { properties: { telefoon: data.telefoon } } : {}),
         }),
       });
       if (r.ok) console.log('[resend] contact toegevoegd:', data.email);
