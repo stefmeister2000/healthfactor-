@@ -70,6 +70,60 @@ async function syncToResend(data) {
   }
 }
 
+// Notificatie-mail naar de gym bij elke nieuwe lead (zodat je meteen kunt bellen)
+const LEAD_NOTIFY_TO = process.env.LEAD_NOTIFY_TO || 'info@healthfactor.be';
+const LEAD_NOTIFY_FROM = process.env.LEAD_NOTIFY_FROM || 'Healthfactor Leads <leads@healthfactor.be>';
+
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+}
+
+async function sendLeadNotification(data) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return; // niet geconfigureerd → overslaan
+  const naam = `${data.voornaam || ''} ${data.naam || ''}`.trim() || '—';
+  const rows = [
+    ['Naam', naam],
+    ['Telefoon', data.telefoon || '—'],
+    ['E-mail', data.email || '—'],
+    ['Doel', data.doel || '—'],
+    ['Bron', data.type || 'onbekend'],
+  ];
+  const trs = rows.map(([k, v]) =>
+    `<tr><td style="padding:8px 0;color:#8a8a90;font-size:13px;width:120px">${k}</td>` +
+    `<td style="padding:8px 0;color:#0a0a0a;font-size:15px;font-weight:600">${esc(v)}</td></tr>`
+  ).join('');
+  const telLink = data.telefoon
+    ? `<a href="tel:${esc(data.telefoon)}" style="display:inline-block;margin-top:20px;background:#e8232e;color:#fff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:100px;font-size:14px">Bel ${esc(naam)} →</a>`
+    : '';
+  const html =
+    `<div style="font-family:Arial,Helvetica,sans-serif;max-width:520px;margin:0 auto;background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden">
+      <div style="background:#0a0a0a;color:#fff;padding:20px 28px;font-weight:800;font-size:16px">Nieuwe lead — Healthfactor</div>
+      <div style="padding:24px 28px">
+        <table style="width:100%;border-collapse:collapse">${trs}</table>
+        ${telLink}
+        <p style="color:#a8a8ae;font-size:12px;margin-top:22px">Automatisch verstuurd via de website. Antwoord op deze mail om rechtstreeks de lead te bereiken.</p>
+      </div>
+    </div>`;
+  try {
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: LEAD_NOTIFY_FROM,
+        to: LEAD_NOTIFY_TO,
+        subject: `Nieuwe lead: ${naam} — ${data.type || 'onbekend'}`,
+        html,
+        ...(data.email ? { reply_to: data.email } : {}),
+      }),
+    });
+    if (r.ok) console.log('[resend] notificatie verstuurd naar', LEAD_NOTIFY_TO);
+    else console.error('[resend] notificatie mislukt:', r.status, await r.text());
+  } catch (e) {
+    console.error('[resend] notificatie fout:', e.message);
+  }
+}
+
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css',
@@ -112,7 +166,8 @@ const server = http.createServer((req, res) => {
         if (!data.email && !data.telefoon) throw new Error('email of telefoon vereist');
         saveLead(data);
         console.log(`[lead] ${data.type}: ${data.voornaam || ''} ${data.naam || ''} <${data.email || data.telefoon}>`);
-        syncToResend(data); // naar Resend audience (fire-and-forget)
+        syncToResend(data); // contact + signup-event naar Resend (fire-and-forget)
+        sendLeadNotification(data); // notificatie-mail naar de gym (fire-and-forget)
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end('{"ok":true}');
       } catch (e) {
