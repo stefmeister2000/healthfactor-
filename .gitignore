@@ -10,3 +10,9 @@ node_modules/
 # Originele foto's (de site gebruikt de geoptimaliseerde leden-*.jpg versies)
 images/*_rw_1920.jpg
 images/Screenshot*.png
+
+# Zware ruwe media / werkmappen — niet naar GitHub
+video's/
+Referal system*/
+images/139ee22c-2da1-4c03-94d9-719f72c648f8.jpg
+images/56e1cfa0-04b5-42cf-88fb-b1690c62957b.jpg

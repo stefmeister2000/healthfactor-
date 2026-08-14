@@ -233,6 +233,11 @@ src="https://www.facebook.com/tr?id=1583924276744564&ev=PageView&noscript=1"
     animation: blink 1.4s ease-in-out infinite;
   }
   @keyframes blink { 50% { opacity: .25; } }
+  /* Fitness/Boksen toggle */
+  .switch { display: inline-flex; gap: 4px; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 100px; padding: 4px; margin-bottom: 22px; backdrop-filter: blur(8px); }
+  .switch-opt { padding: 9px 24px; border-radius: 100px; font-size: 13.5px; font-weight: 700; color: rgba(255,255,255,.7); transition: color .2s, background .2s; white-space: nowrap; }
+  .switch-opt:hover { color: #fff; }
+  .switch-opt.active { background: var(--white); color: var(--black); }
   .hero h1 {
     font-size: clamp(46px, 6.8vw, 88px);
     font-weight: 900;
@@ -961,6 +966,10 @@ src="https://www.facebook.com/tr?id=1583924276744564&ev=PageView&noscript=1"
   <div class="wrap hero-inner">
     <div class="hero-grid">
       <div>
+        <div class="switch" role="tablist" aria-label="Kies je programma">
+          <a class="switch-opt active" href="index.html" aria-current="page">Fitness</a>
+          <a class="switch-opt" href="boxing.html">Boksen</a>
+        </div>
         <span class="bonus-chip"><span class="dot"></span> Beperkt aantal starterspakketten per maand</span>
         <h1>Alles erin.<br /><span class="strike">€155</span> €39,90.</h1>
         <p class="lede">

@@ -198,6 +198,11 @@ src="https://www.facebook.com/tr?id=1583924276744564&ev=PageView&noscript=1"
   }
   .bonus-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); animation: blink 1.4s ease-in-out infinite; }
   @keyframes blink { 50% { opacity: .25; } }
+  /* Fitness/Boksen toggle */
+  .switch { display: inline-flex; gap: 4px; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 100px; padding: 4px; margin-bottom: 22px; backdrop-filter: blur(8px); }
+  .switch-opt { padding: 9px 24px; border-radius: 100px; font-size: 13.5px; font-weight: 700; color: rgba(255,255,255,.7); transition: color .2s, background .2s, box-shadow .2s; white-space: nowrap; }
+  .switch-opt:hover { color: #fff; }
+  .switch-opt.active { background: linear-gradient(135deg, #ff2f39, var(--red-dark)); color: #fff; box-shadow: 0 6px 18px var(--red-glow); }
   .hero h1 { font-size: clamp(46px, 6.8vw, 88px); font-weight: 900; margin-bottom: 22px; }
   .hero p.lede { max-width: 500px; color: var(--grey); font-size: clamp(16px, 1.35vw, 18px); margin-bottom: 30px; }
   .hero p.lede b { color: var(--white); font-weight: 700; }
@@ -685,6 +690,10 @@ src="https://www.facebook.com/tr?id=1583924276744564&ev=PageView&noscript=1"
   <div class="wrap hero-inner">
     <div class="hero-grid">
       <div>
+        <div class="switch" role="tablist" aria-label="Kies je programma">
+          <a class="switch-opt" href="index.html">Fitness</a>
+          <a class="switch-opt active" href="boxing.html" aria-current="page">Boksen</a>
+        </div>
         <span class="bonus-chip"><span class="dot"></span> Healthfactor Boxing Club — Aalst</span>
         <h1>Boksen &amp; fitness.<br /><span class="accent">Alles-in.</span></h1>
         <p class="lede">
