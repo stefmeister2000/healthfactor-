@@ -1461,7 +1461,7 @@ src="https://www.facebook.com/tr?id=1583924276744564&ev=PageView&noscript=1"
   }
 
   // Tonen na 8 seconden, of vroeger bij exit intent — één keer per bezoeker
-  setTimeout(showPopup, 8000);
+  setTimeout(showPopup, 4000);
   document.addEventListener('mouseleave', e => { if (e.clientY <= 0) showPopup(); });
 
   document.getElementById('popupClose').addEventListener('click', () => hidePopup(true));
