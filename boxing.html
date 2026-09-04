@@ -68,6 +68,21 @@ src="https://www.facebook.com/tr?id=1583924276744564&ev=PageView&noscript=1"
   .muted { color: var(--grey); }
   .accent { color: var(--red); }
 
+  /* ---------- Event banner ---------- */
+  .event-banner { padding: clamp(36px, 5vw, 60px) 0; }
+  .eb {
+    display: flex; align-items: center; justify-content: space-between; gap: 26px;
+    background: linear-gradient(135deg, rgba(232,35,46,.14), rgba(255,255,255,.03));
+    border: 1px solid rgba(232,35,46,.4);
+    border-radius: var(--r-lg);
+    padding: 28px 34px;
+  }
+  .eb-tag { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+  .eb h3 { font-size: clamp(20px, 2.4vw, 27px); margin-bottom: 6px; }
+  .eb p { color: var(--grey); font-size: 14.5px; max-width: 560px; }
+  .eb .btn { flex: 0 0 auto; }
+  @media (max-width: 760px) { .eb { flex-direction: column; align-items: flex-start; } .eb .btn { width: 100%; } }
+
   /* ---------- Light sections ---------- */
   .light { background: var(--paper); color: var(--black); }
   .light .muted, .light p { color: var(--grey-dark); }
@@ -764,6 +779,20 @@ src="https://www.facebook.com/tr?id=1583924276744564&ev=PageView&noscript=1"
           <div class="spots-bar"><i></i></div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EVENT BANNER ================= -->
+<section class="event-banner">
+  <div class="wrap">
+    <div class="eb reveal">
+      <div class="eb-txt">
+        <span class="eb-tag">Evenement · 31 oktober</span>
+        <h3>Boxeur Soirée Contender — boksgala in Lede</h3>
+        <p>Een avond vol bokskampen, walking dinner en afterparty in Sporthal Lede (Aalst). Where future champions rise.</p>
+      </div>
+      <a class="btn btn-red" href="boxeur-soiree.html">Info &amp; tickets <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
