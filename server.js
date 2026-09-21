@@ -31,7 +31,18 @@ const RESEND_EVENT_NAME = process.env.RESEND_EVENT_NAME || 'healthfactor.email_s
 // (dat laatste start de welkomflow-automation). Beide alleen als geconfigureerd.
 async function syncToResend(data) {
   const key = process.env.RESEND_API_KEY;
-  const audience = process.env.RESEND_AUDIENCE_ID;
+  // Route by the originating form, including the newsletter popups.
+  const boxing = ['boxing-lidmaatschap', 'boxing-nieuwsbrief'].includes(data.type);
+  const fitness = ['starterspakket', 'nieuwsbrief'].includes(data.type);
+  const audience = boxing
+    ? (process.env.RESEND_BOXING_SEGMENT_ID || '6cea9522-57d4-4c9a-ae94-3fc427fc67c0')
+    : fitness
+      ? (process.env.RESEND_FITNESS_SEGMENT_ID || process.env.RESEND_AUDIENCE_ID || '75f21bcc-bfb4-418e-a329-9a8417ff0653')
+      : null;
+  if (!audience) {
+    console.error('[resend] onbekend formuliertype; contact en event overgeslagen');
+    return;
+  }
   if (!key || !data.email) return; // niet geconfigureerd → overslaan
 
   // 1) Contact toevoegen aan de audience (moet eerst bestaan voor de automation)
@@ -56,14 +67,17 @@ async function syncToResend(data) {
     }
   }
 
-  // 2) Signup-event vuren → start de welkomflow-automation
+  // 2) Eigen boks-event voorkomt dat boksleads ook de fitnessflow starten.
+  const eventName = boxing
+    ? (process.env.RESEND_BOXING_EVENT_NAME || 'healthfactor.boxing_signup')
+    : RESEND_EVENT_NAME;
   try {
     const r = await fetch('https://api.resend.com/events/send', {
       method: 'POST',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event: RESEND_EVENT_NAME, email: data.email }),
+      body: JSON.stringify({ event: eventName, email: data.email }),
     });
-    if (r.ok) console.log('[resend] event gevuurd:', RESEND_EVENT_NAME, data.email);
+    if (r.ok) console.log('[resend] event gevuurd:', eventName, data.email);
     else console.error('[resend] event mislukt:', r.status, await r.text());
   } catch (e) {
     console.error('[resend] event fout:', e.message);
