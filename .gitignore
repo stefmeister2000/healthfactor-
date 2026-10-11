@@ -3,6 +3,7 @@
 
 # Persoonsgegevens van leads — nooit naar GitHub pushen
 leads.csv
+crm-pending/
 
 .DS_Store
 node_modules/
