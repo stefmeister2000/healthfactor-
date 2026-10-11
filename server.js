@@ -5,10 +5,10 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { normalizeLead, createCrmOutbox } = require('./crm-sync');
 
 const ROOT = __dirname;
 const PORT = process.env.PORT || 4174;
-const LEADS_FILE = path.join(ROOT, 'leads.csv');
 const CSV_HEADER = 'datum;type;voornaam;naam;email;telefoon;doel\n';
 
 // .env inladen (geen dependency) — RESEND_API_KEY en RESEND_AUDIENCE_ID
@@ -23,6 +23,21 @@ function loadEnv() {
   } catch { /* geen .env — dan slaan we Resend gewoon over */ }
 }
 loadEnv();
+
+const DATA_DIR = process.env.RAILWAY_VOLUME_MOUNT_PATH || process.env.HEALTHFACTOR_DATA_DIR || ROOT;
+if (process.env.RAILWAY_ENVIRONMENT_ID && process.env.CRM_INBOUND_TOKEN && !process.env.RAILWAY_VOLUME_MOUNT_PATH) {
+  throw new Error('Attach a persistent volume before enabling CRM lead delivery');
+}
+fs.mkdirSync(DATA_DIR, { recursive: true, mode: 0o700 });
+const LEADS_FILE = path.join(DATA_DIR, 'leads.csv');
+const crm = createCrmOutbox({
+  directory: path.join(DATA_DIR, 'crm-pending'),
+  token: process.env.CRM_INBOUND_TOKEN,
+  endpoint: process.env.CRM_INBOUND_URL,
+});
+const flushCrm = () => crm.flush().catch(() => console.error('[crm] queue could not be processed'));
+setInterval(flushCrm, 30000).unref();
+flushCrm();
 
 // Event dat de welkom-automation in Resend triggert
 const RESEND_EVENT_NAME = process.env.RESEND_EVENT_NAME || 'healthfactor.email_signup';
@@ -176,10 +191,11 @@ const server = http.createServer((req, res) => {
     req.on('data', c => { body += c; if (body.length > 10000) req.destroy(); });
     req.on('end', () => {
       try {
-        const data = JSON.parse(body);
-        if (!data.email && !data.telefoon) throw new Error('email of telefoon vereist');
+        const data = normalizeLead(JSON.parse(body));
         saveLead(data);
-        console.log(`[lead] ${data.type}: ${data.voornaam || ''} ${data.naam || ''} <${data.email || data.telefoon}>`);
+        crm.enqueue(data); // persist before acknowledging; the worker retries temporary CRM failures
+        flushCrm();
+        console.log(`[lead] ${data.type}: saved`);
         syncToResend(data); // contact + signup-event naar Resend (fire-and-forget)
         sendLeadNotification(data); // notificatie-mail naar de gym (fire-and-forget)
         res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -196,7 +212,10 @@ const server = http.createServer((req, res) => {
   let urlPath = decodeURIComponent(req.url.split('?')[0]);
   if (urlPath === '/') urlPath = '/index.html';
   const filePath = path.join(ROOT, path.normalize(urlPath));
-  if (!filePath.startsWith(ROOT) || filePath === LEADS_FILE || filePath.endsWith('server.js')) {
+  const relative = path.relative(ROOT, filePath);
+  const publicFiles = ['index.html', 'boxing.html', 'boxeur-soiree.html', 'favicon.svg', 'favicon-32.png', 'apple-touch-icon.png'];
+  const publicImage = relative.startsWith(`images${path.sep}`) && Object.hasOwn(MIME, path.extname(relative).toLowerCase());
+  if (relative.startsWith('..') || path.isAbsolute(relative) || (!publicFiles.includes(relative) && !publicImage)) {
     res.writeHead(403); res.end('Forbidden'); return;
   }
   fs.readFile(filePath, (err, buf) => {
@@ -206,4 +225,4 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, '0.0.0.0', () => console.log(`Healthfactor draait op poort ${PORT} — leads in ${LEADS_FILE}`));
+server.listen(PORT, '0.0.0.0', () => console.log(`Healthfactor draait op poort ${server.address().port} — leads in ${LEADS_FILE}`));
